@@ -1,37 +1,20 @@
 === About ===
 name: Map Measure
 website: http://www.ushahidi.com
-description: I measure things
+description: Measuring Tool for any maps
 version: 0.1
 requires: 2.1
 tested up to: 2.1
-author: Brian Herbert
+author: Dylan Gillespie
 author website: http://www.ushahidi.com
 
 == Description ==
-Allow users to upload videos to a Viddler account.
-
-The heavy lifting in this plugin is done by the included Viddler PHP library
-that can be found at https://github.com/viddler/phpviddler. This library is
-licensed under the MIT License found at /plugins/viddler/ViddlerLicense.txt
+Adds a Ruler measuring tool to the maps that are present within the Ushahidi framework.
 
 == Installation ==
-1. Copy the entire /viddler/ directory into your /plugins/ directory.
-2. Open /plugins/viddler/config/viddler.php and set the appropriate settings
-3. Activate the plugin.
+1. Copy the entire /mapmeasure/ directory into your /plugins/ directory.
+2. Activate the plugin.
 
 == Changelog ==
 0.1
 * Created the plugin
-
-
-
-
-CREATE TABLE `viddler` (
-`viddler_id` VARCHAR( 16 ) NOT NULL ,
-`incident_id` INT NOT NULL ,
-`checkin_id` INT NOT NULL ,
-`url` VARCHAR( 255 ) NOT NULL ,
-`embed` TEXT NOT NULL ,
-PRIMARY KEY ( `viddler_id` )
-) ENGINE = MYISAM ;
