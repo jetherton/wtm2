@@ -18,11 +18,13 @@ class mapmeasureevents {
 	public function add()
 	{
 		$url = url::current();
+		echo $url;
+		exit;
 		//Only add the plugin to pages with a map
 		//The last blank case happens when the webpage first loads, so the main page
 		if(isset($url) AND 
 			($url == 'main' OR $url == 'reports' OR 
-					$url == 'reports/submit' OR $url == 'alerts' )){
+					$url == 'reports/submit' OR $url == 'alerts' OR $url == '')){
 			Event::add('ushahidi_action.header_scripts', array($this, 'render_javascript'));
 		}
 	}

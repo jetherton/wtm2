@@ -1,6 +1,6 @@
 #rulerControl{
 	width: 50px;
-	z-index: 200;
+	z-index: 20000;
 	position: relative;
 	left: 40px;
 	top: 32px;
