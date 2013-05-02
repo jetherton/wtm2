@@ -9,18 +9,17 @@
 ?>
 
 <script type="text/javascript">	
-	var path_info = '<?php echo $_SERVER['PATH_INFO']?>';
+	var path_info = '<?php echo url::current()?>';
 	var map_div = '';
 
 	switch(path_info){
-		case '/': 
-		case '/main':
+		case 'main':
 			map_div = 'map';
 			break;
-		case '/reports/submit':
+		case 'reports/submit':
 			map_div = 'divMap';
 			break;
-		case '/reports':
+		case 'reports':
 			map_div = 'rb_map-view';
 			break;
 	}
@@ -29,30 +28,27 @@
 	$(document).ready(function(){
 		//create the ruler buttons
 		$('#'+map_div).before(
-				"<div id='control'>I am control</div><div id='rulerDiv' style='display:none'>\
-					<input type='radio' value='line' name='ruler' id='lineDraw' onclick='toggleControl(this)'> Hey There</br>\
-					<input type='radio' value='polygon' name='ruler' id='areaDraw' onclick='toggleControl(this)'> I draw areas\
+				'<div id="rulerControl"><img class="rulerIcon" src="<?php echo URL::base();?>plugins/mapmeasure/media/img/img_trans.gif" width="1" height="1"/>\
+				<div id="rulerDiv" style="display:none">\
+					<input type="radio" value="line" name="ruler" id="lineDraw" onclick="toggleControl(this)"> Line</br>\
+					<input type="radio" value="polygon" name="ruler" id="areaDraw" onclick="toggleControl(this)"> Area</br>\
+					<input type="radio" value="None" name="ruler" id="noDraw" onclick="toggleControl(this)"> None\
 				</div>\
-				<div id = 'output'></div>\
-					");
+				<div id = "output"></div></div>\
+					');
 
 		//open the ruler buttons when clicked on
-		$('#control').click(function(){
-			$('#rulerDiv').toggle();
+		$('#rulerControl').mouseenter(function(){
+			$('#rulerDiv').show();
+		});
+		$('#rulerControl').mouseleave(function(){
+			$('#rulerDiv').hide();
 		});
 	});
 
 
-    var map, measureControls;
-    function init(){
-        map = new OpenLayers.Map(map_div);
-        var wmsLayer = new OpenLayers.Layer.WMS( "OpenLayers WMS", 
-                "http://vmap0.tiles.osgeo.org/wms/vmap0?", {layers: 'basic'}); 
-
-            map.addLayers([wmsLayer]);
-            map.addControl(new OpenLayers.Control.LayerSwitcher());
-            map.addControl(new OpenLayers.Control.MousePosition());
-            
+    var measureControls;
+    function init(){            
         // style the sketch fancy
         var sketchSymbolizers = {
             "Point": {
@@ -79,13 +75,8 @@
             }
         };
         var style = new OpenLayers.Style();
-        console.log(map);
-        console.log(wmsLayer);
-        console.log(OpenLayers.Rule({symbolizer: sketchSymbolizers}));
-        //console.log(new OpenLayers.Rule({'symbolizer': sketchSymbolizers}));
-        style.addRules([
-             new OpenLayers.Rule({symbolizer: sketchSymbolizers})
-        ]);
+        
+        style.addRules([new OpenLayers.Rule({symbolizer: sketchSymbolizers})]);
         var styleMap = new OpenLayers.StyleMap({"default": style});
         
         // allow testing of specific renderers via "?renderer=Canvas", etc
@@ -133,22 +124,21 @@
     }
     
     function handleMeasurements(event) {
-        var geometry = event.geometry;
         var units = event.units;
         var order = event.order;
         var measure = event.measure;
         var element = document.getElementById('output');
         var out = "";
         if(order == 1) {
-            out += "measure: " + measure.toFixed(3) + " " + units;
+            out += "Distance: " + measure.toFixed(3) + " " + units;
         } else {
-            out += "measure: " + measure.toFixed(3) + " " + units + "<sup>2</" + "sup>";
+            out += "Distance: " + measure.toFixed(3) + " " + units + "<sup>2</" + "sup>";
         }
         element.innerHTML = out;
     }
 
     function toggleControl(element) {
-        console.log('hey I changed control');
+       	$('#rulerDiv').toggle();
         for(key in measureControls) {
             var control = measureControls[key];
             if(element.value == key && element.checked) {
@@ -170,3 +160,6 @@
 </script>
 
 <body onload='init()'>
+<link rel="stylesheet" type="text/css" href="<?php echo url::base(); ?>plugins/mapmeasure/media/css/measureCSS.css"/>
+
+

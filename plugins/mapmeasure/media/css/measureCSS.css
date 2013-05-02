@@ -1,0 +1,21 @@
+#rulerControl{
+	width: 50px;
+	z-index: 200;
+	position: relative;
+	left: 40px;
+	top: 32px;
+}
+#rulerControl img.rulerIcon{
+	background: url('../img/Ruler.png') -11px -12px;	
+	width:25px;
+	height:20px;
+}
+#rulerDiv{
+	position:absolute;
+	background-color: rgb(225, 226, 228);
+}
+#output{
+	width: 150px;
+	position:absolute;
+	background-color: rgb(225, 226, 228);
+}
